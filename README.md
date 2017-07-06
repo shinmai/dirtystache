@@ -49,34 +49,34 @@ There are several other repositories that contain DustPress material as well:
 
 You need to call `dirtystache();` in your `functions.php` to enable dirtystache. It must naturally be done after requiring the library itself <!-- if you haven't used Composer's autoload feature -->.
 
-Within your theme there must be two directories called `models` and `partials` to use DustPress. Their purpose will be explained later in this file.
+Within your theme there must be two directories called `models` and `partials` to use dirtystache. Their purpose will be explained later in this file.
 
-The basics of using DustPress are very simple. Unlike traditional WordPress theme development, DustPress relies on MVVM, or Model View ViewModel architecture in which fetching data and displaying it to the user are separated into different modules.
+The basics of using dirtystache are very simple. Unlike traditional WordPress theme development, dirtystache relies on MVVM, or Model View ViewModel architecture in which fetching data and displaying it to the user are separated into different modules.
 
 ## File naming and locations
 
 ### Data models
 
-Even though implementing an almost completely new development pattern to WordPress theme developers, DustPress still uses some of the WordPress core functions. The naming of the data models and view partials follow the naming conventions of traditional WordPress themes. The model for a single post should be named `single.php` etc.
+Even though implementing an almost completely new development pattern to WordPress theme developers, dirtystache still uses some of the WordPress core functions. The naming of the data models and view partials follow the naming conventions of traditional WordPress themes. The model for a single post should be named `single.php` etc.
 
-In WordPress, your custom page templates could be named pretty much anything as long as you declare the name of the template in the comment section in the beginning of the file. This is the case in DustPress too, but the class name that you write for the model should follow a certain pattern. For example if you have a `Frontpage` template with a filename `page-frontpage.php`, your class should be named PageFrontpage. The class names are case sensitive. The same goes with custom content type singles, where a single `person` file should be named `single-person.php` and the class accordingly `SinglePerson`.
+In WordPress, your custom page templates could be named pretty much anything as long as you declare the name of the template in the comment section in the beginning of the file. This is the case in dirtystache too, but the class name that you write for the model should follow a certain pattern. For example if you have a `Frontpage` template with a filename `page-frontpage.php`, your class should be named PageFrontpage. The class names are case sensitive. The same goes with custom content type singles, where a single `person` file should be named `single-person.php` and the class accordingly `SinglePerson`.
 
-You still have to declare a name for the templates in the starting comment as you would have done in a traditional WordPress theme as well. This allows user to choose the template file to use with the page and points the DustPress core
+You still have to declare a name for the templates in the starting comment as you would have done in a traditional WordPress theme as well. This allows user to choose the template file to use with the page and points the dirtystache core
 to load the correct model when loading the page.
 
 The models must be located in the `models` directory. They could, however, be arranged in any kind of subdirectory tree, so feel free to keep them in whatever structure you like. Note that WordPress also needs to find your template file in order it to work.
 
 ### Views
 
-The Dust templates are the views of our design pattern. DustPress uses Geniem's fork of [DustPHP](https://github.com/devgeniem/dust-php) library for parsing the Dust templates.
+The Handlebars templates are the views of our design pattern. dirtystache uses XaminProject's of [handlebars.php](https://github.com/XaminProject/handlebars.php) library for parsing the Handlebars templates.
 
-All the data gathered and returned by the public functions of your models are automatically passed to the view. DustPress looks for the Dust templates in the `partials` directory under the root of the theme. Like models, they could be arranged in any kind of subdirectory hierarchy, so feel free to use whatever suits your needs.
+All the data gathered and returned by the public functions of your models are automatically passed to the view. dirtystache looks for the Handlebars templates in the `partials` directory under the root of the theme. Like models, they could be arranged in any kind of subdirectory hierarchy, so feel free to use whatever suits your needs.
 
-By default the Dust template files follow the naming of the models. `single.php` should be paired with `single.dust`. This naming convention can be overwritten in your model by calling the `set_template()` function. In any of the public functions of the model write `$this->set_template("partial_name")` and it will be used instead of the default template. The `.dust` file extension is not needed.
+By default the Handlebars template files follow the naming of the models. `single.php` should be paired with `single.handlebars`. This naming convention can be overwritten in your model by calling the `set_template()` function. In any of the public functions of the model write `$this->set_template("partial_name")` and it will be used instead of the default template. The `.handlebars` file extension is not needed.
 
 ## Data models
 
-The data models of DustPress consist of a class named the same as the file but in CamelCase instead of hyphens. `page-frontpage.php` should have a class named `PageFrontpage` that extends the `\DustPress\Model` class:
+The data models of dirtystache consist of a class named the same as the file but in CamelCase instead of hyphens. `page-frontpage.php` should have a class named `PageFrontpage` that extends the `\dirtystache\Model` class:
 
 ```
 <?php
@@ -84,7 +84,7 @@ The data models of DustPress consist of a class named the same as the file but i
 Template name: Frontpage
 */
 
-class PageFrontpage extends \DustPress\Model {
+class PageFrontpage extends \dirtystache\Model {
   //
 }
 ?>
@@ -92,13 +92,13 @@ class PageFrontpage extends \DustPress\Model {
 
 ### Autoconstructing and modular usage
 
-As described above DustPress automatically locates your main model following the WordPress theme naming conventions and structure. The main model is loaded and constructed automatically. Lots of good stuff happen behind the scenes in the `__construct` method of the `Model` class. _Do not overwrite it without calling `parent::__construct();` in the beginning of your own constructor._
+As described above dirtystache automatically locates your main model following the WordPress theme naming conventions and structure. The main model is loaded and constructed automatically. Lots of good stuff happen behind the scenes in the `__construct` method of the `Model` class. _Do not overwrite it without calling `parent::__construct();` in the beginning of your own constructor._
 
-Alongside the autoloading you can use DustPress models in any modular use case you can come up with. One example would be building a custom API in a file called `api.php` containing a `Model` extending class called `API` _(no need to follow the naming convention since the class is not autoconstructed)_ running all kinds of public functions rendering multiple custom templates. Yes, with DustPress you can do Dust rendering anywhere within your WordPress project! [(see the example)]() [(power up your API with DustPressJS)]()
+Alongside the autoloading you can use dirtystache models in any modular use case you can come up with. One example would be building a custom API in a file called `api.php` containing a `Model` extending class called `API` _(no need to follow the naming convention since the class is not autoconstructed)_ running all kinds of public functions rendering multiple custom templates. Yes, with dirtystache you can do Handlebars rendering anywhere within your WordPress project!
 
 ### Binding the data
 
-DustPress has its own global data object that is passed to the view when everything is done and it is time to render the page. Binding data to the object is done via the `return` statements in publicly accessible functions. While autoloading the main model and its submodels, all public functions will automatically be run. If you have data you want to load inside a function and do not want to include it into the global data object, set the visibility of a function to `private` or `protected`.
+dirtystache has its own global data object that is passed to the view when everything is done and it is time to render the page. Binding data to the object is done via the `return` statements in publicly accessible functions. While autoloading the main model and its submodels, all public functions will automatically be run. If you have data you want to load inside a function and do not want to include it into the global data object, set the visibility of a function to `private` or `protected`.
 
 ```
 public function last_posts() {
@@ -107,7 +107,7 @@ public function last_posts() {
 }
 ```
 
-DustPress data object holds a variety of other objects that are user defined models. For example if you have a frontpage with a header, a content block, a sidebar and a footer, the data object would look like this:
+dirtystache data object holds a variety of other objects that are user defined models. For example if you have a frontpage with a header, a content block, a sidebar and a footer, the data object would look like this:
 
 ```
 object(stdClass)#1 (5) {
@@ -136,7 +136,7 @@ Recurring elements like headers or footers should be created as submodels that c
 Template name: Frontpage
 */
 
-class PageFrontpage extends \DustPress\Model {
+class PageFrontpage extends \dirtystache\Model {
 
   public function init() {
     $this->bind_sub("Header");
@@ -147,7 +147,7 @@ class PageFrontpage extends \DustPress\Model {
 ?>
 ```
 
-This code fetches all three models and binds their data to the global data hierarchy under the corresponding object. Notice that we have created a public function `init` which is automatically run by DustPress and therefore the submodels will be included. No `init` block will be created in the data tree since we do not return anything in our function.
+This code fetches all three models and binds their data to the global data hierarchy under the corresponding object. Notice that we have created a public function `init` which is automatically run by dirtystache and therefore the submodels will be included. No `init` block will be created in the data tree since we do not return anything in our function.
 
 Submodel bindings can be run anywhere in the model for example inside an `if` statement. Submodels work recursively, hence submodels can bind more submodels.
 
@@ -155,7 +155,7 @@ Submodel bindings can be run anywhere in the model for example inside an `if` st
 
 #### Binding the data
 
-The actual passing of the data to inside the methods happens via user defined functions. DustPress runs through all public methods in the model and puts their return data to the global data object under current model's branch of the tree. It goes in a object named after the method.
+The actual passing of the data to inside the methods happens via user defined functions. dirtystache runs through all public methods in the model and puts their return data to the global data object under current model's branch of the tree. It goes in a object named after the method.
 
 ```
 public function SomeData() {
@@ -270,12 +270,12 @@ Contents of the `wp_head()` and `wp_footer()` functions are available for use in
 
 ### Method caching
 
-DustPress has a native support of WordPress transient cache. It works on a method basis, so you can give different methods different TTLs and they get cached automatically.
+dirtystache has a native support of WordPress transient cache. It works on a method basis, so you can give different methods different TTLs and they get cached automatically.
 
 By default the method caching is disabled. It can be enabled via a filter in your functions.php as follows:
 
 ```
-add_filter( "dustpress/settings/cache", "__return_true" );
+add_filter( "dirtystache/settings/cache", "__return_true" );
 ```
 
 However, that setting itself doesn't do anything. You also have to define TTLs for the methods you want to cache. TTL is an abbreviation for Time To Live. It defines the time that a method's cache is alive before it needs to be renewed, i.e. when it's code gets run again.
@@ -283,7 +283,7 @@ However, that setting itself doesn't do anything. You also have to define TTLs f
 The TTLs are set in an associative array in a public property of the model called `$ttl` as follows:
 
 ```
-class Model extends \DustPress\Model {
+class Model extends \dirtystache\Model {
   public $ttl = [
     "Method" => 60
   ];
@@ -296,45 +296,45 @@ class Model extends \DustPress\Model {
 }
 ```
 
-In the example, the data `Method` returns gets cached for 60 seconds. Caching works on [DustPress.js](https://github.com/devgeniem/dustpress-js) requests as well.
+In the example, the data `Method` returns gets cached for 60 seconds. <!-- Caching works on [DustPress.js](https://github.com/devgeniem/dustpress-js) requests as well. -->
 
 ### Partial and end-result caching
 
-DustPress also uses WordPress trasient cache for its partials and even the end-result HTML caching. Unlike method caching, these features are enabled by default and you have to disable them if you don't want to use them.
+dirtystache also uses WordPress trasient cache for its partials and even the end-result HTML caching. Unlike method caching, these features are enabled by default and you have to disable them if you don't want to use them.
 
 #### Partial caching
 
-Partial caching caches the compiled version of the Dust templates so that they don't have to be compiled from scratch every time the page loads as it is relatively heavy operation in a large scale.
+Partial caching caches the compiled version of the Handlebars templates so that they don't have to be compiled from scratch every time the page loads as it is relatively heavy operation in a large scale.
 
 The partials are cached forever, which means that whenever you change them, you probably want to run `wp_cache_flush()` or the corresponding WP CLI command so that they get updated.
 
 You may want to turn the caching off totally while you are in your development environment. That happens, unexpectedly, via a filter as follows:
 
 ```
-add_filter( "dustpress/cache/partials", "__return_false" );
+add_filter( "dirtystache/cache/partials", "__return_false" );
 ```
 
 You can also turn the partial caching off only for certain partials:
 
 ```
-add_filter( "dustpress/cache/partials/partial_name", "__return_false" );
+add_filter( "dirtystache/cache/partials/partial_name", "__return_false" );
 ```
 
 #### End-result caching
 
-DustPress also caches the resulting HTML that gets served to the end-user. It generates the cache keys with both the data and the partial used to render the HTML, so that cache updates every time the data changes. It is used only to save the time that DustPHP would use to render the template with the data.
+dirtystache also caches the resulting HTML that gets served to the end-user. It generates the cache keys with both the data and the partial used to render the HTML, so that cache updates every time the data changes. It is used only to save the time that Handlebars.php would use to render the template with the data.
 
 You can turn the end-result caching off in the same way as you would the partial caching:
 
 ```
-add_filter( "dustpress/cache/rendered", "__return_false" );
+add_filter( "dirtystache/cache/rendered", "__return_false" );
 ```
 
-**Note!** When enabled, [DustPress Debugger](https://github.com/devgeniem/dustpress-debugger) turns both partial and end-result caching off.
+<!-- **Note!** When enabled, [DustPress Debugger](https://github.com/devgeniem/dustpress-debugger) turns both partial and end-result caching off. -->
 
-## Dust templates
+## Handlebars templates
 
-DustPHP templates are 100% compatible with Dust.js templates. See the official [Dust.js website](http://www.dustjs.com/) for documentation or the [LinkedIn Dust Tutorial](https://github.com/linkedin/dustjs/wiki/Dust-Tutorial).
+Handlebars.php templates are 99% compatible with Handlebars.js templates. See the official [Handlebars.js website](http://handlebarsjs.com//) for documentation.
 
 All templates should have a context block with the name of the current model, so that the variables are usable in the template. As for our previous example model, very simplified template could look like this:
 
@@ -355,11 +355,11 @@ All templates should have a context block with the name of the current model, so
 {>"shared/footer" /}
 ```
 
-This template includes header.dust, sidebar.dust and footer.dust templates from `partials/shared/` subdirectory. At the end of the `PageFrontpage` block we echo HTML from the `SomeHTML` variable and use the `s` filter to get it _unescaped_.  See the [Dust Tutorial](https://github.com/linkedin/dustjs/wiki/Dust-Tutorial#Sections_and_Context) for more information about sections and contexts.
+This template includes header.handlebars, sidebar.handlebars and footer.handlebars templates from `partials/shared/` subdirectory. At the end of the `PageFrontpage` block we echo HTML from the `SomeHTML` variable and use the `s` filter to get it _unescaped_. <!--  See the [Dust Tutorial](https://github.com/linkedin/dustjs/wiki/Dust-Tutorial#Sections_and_Context) for more information about sections and contexts.-->
 
-## DustPress Helpers
+## dirtystache Helpers
 
-Helpers extend the Dust.js templating language with more complex functionality than just data inserting (see: [Context Helpers](http://www.dustjs.com/guides/context-helpers/), [Dust Helpers](http://www.dustjs.com/guides/dust-helpers/)). With DustPress you can use all Dust.js Helpers within your Dust templates. We have also taken it a bit further and included some nice bits for you to use. As mentioned above there are helpers for echoing header and footer data into your templates but here is a complete list of helpers included with DustPress:
+Helpers extend the Handlebars.js templating language with more complex functionality than just data inserting. With dirtystache you can use all Handlebars.js Helpers within your Handlebars templates. We have also taken it a bit further and included some nice bits for you to use. As mentioned above there are helpers for echoing header and footer data into your templates but here is a complete list of helpers included with dirtystache:
 
 ### contains
 
@@ -401,9 +401,9 @@ The `image` helper returns a markup for `img` tags with proper `srcset` and `siz
 - `ul_classes`: Classes that are given to the `ul` element separated with spaces. Per default this is empty.
 - `ul_id`: ID that is given to the `ul` element. Per default this is empty.
 - `show_submenu`: A boolean value if submenus are shown or not. Defaults to true.
-- `menu_partial`: Use another partial instead of the default `menu.dust`. You can use a custom partial by creating your own `menu.dust` inside your theme, and DustPress will use that instead of the one from its core.
-- `menuitem_partial`: Use another partial instead of the default `menuitem.dust`. You can use a custom partial by creating your own `menuitem.dust` inside your theme, and DustPress will use that instead of the one from its core.
-- `data`: Custom data object to be passed to the menu template. Can be used under `{data}` in `menu.dust` or `menuitem.dust`.
+- `menu_partial`: Use another partial instead of the default `menu.handlebars`. You can use a custom partial by creating your own `menu.handlebars` inside your theme, and dirtystache will use that instead of the one from its core.
+- `menuitem_partial`: Use another partial instead of the default `menuitem.handlebars`. You can use a custom partial by creating your own `menuitem.handlebars` inside your theme, and dirtystache will use that instead of the one from its core.
+- `data`: Custom data object to be passed to the menu template. Can be used under `{data}` in `menu.handlebars` or `menuitem.handlebars`.
 
 Example:
 ```
@@ -432,7 +432,7 @@ Example:
 ```
 #### Page link formatting
 
-The helper defaults to the following page link format: `{page_link}{last_page}{hash}`. Without any customizing to WordPress url handling the links are outputted as `https://domain.com/something/?paged=2`.  To alter the link formatting filter the `page_link` value with the `dustpress/pagination/page_link` filter and replace the `pagination.dust` with your custom template in you theme.
+The helper defaults to the following page link format: `{page_link}{last_page}{hash}`. Without any customizing to WordPress url handling the links are outputted as `https://domain.com/something/?paged=2`.  To alter the link formatting filter the `page_link` value with the `dirtystache/pagination/page_link` filter and replace the `pagination.handlebars` with your custom template in you theme.
 
 ##### Formatting example:
 
@@ -444,7 +444,7 @@ The helper defaults to the following page link format: `{page_link}{last_page}{h
 custom_pagination_link( $page_link ) {
     return str_replace( '?paged=', 'page/', $page_link );
 }
-add_filter( 'dustpress/pagination/page_link', 'custom_pagination_link' );
+add_filter( 'dirtystache/pagination/page_link', 'custom_pagination_link' );
 ```
 
 ### permalink
@@ -467,11 +467,9 @@ Example:
 {@s s="Home page" td="my-page" /}
 ```
 
-You can use a [translation parser](https://github.com/devgeniem/dustpress/wiki/Translation-parser) to find all strings defined with {@s} and write them to a file in a format that can be scanned with POedit.
+You can use a [translation parser](https://github.com/devgeniem/dirtystache/wiki/Translation-parser) to find all strings defined with {@s} and write them to a file in a format that can be scanned with POedit.
 
 ### sep
-
-`sep` helper is an extension to Dust's native `sep` helper. It behaves the same, but it can also be given two extra parameters: `start` and `end`. They work as the offsets of the function. By default `start` is 0 and `end` is 1.
 
 Example:
 ```
@@ -485,7 +483,7 @@ The participants are Bob, Samantha, Michael and Alice.
 
 ### set and unset
 
-`set` helper can be used to set and alter the data tree in the Dust template. You can create your own variables and assign them values either hardcoded or from the data. You can also perform several mathematic operations on them.
+`set` helper can be used to set and alter the data tree in the Handlebars template. You can create your own variables and assign them values either hardcoded or from the data. You can also perform several mathematic operations on them.
 
 Parameters
 - `key`: This parameter is required. It is the name of the variable you want to create or alter.
@@ -549,12 +547,12 @@ Example:
 
 ### do_not_render
 
-If you do not want the DustPress to render the page automatically but would rather do it yourself, you can call `$this->do_not_render()` anywhere in your model or submodels. In that case DustPress populates the data object, but leaves the
+If you do not want the dirtystache to render the page automatically but would rather do it yourself, you can call `$this->do_not_render()` anywhere in your model or submodels. In that case dirtystache populates the data object, but leaves the
 rendering for the developer.
 
-DustPress render function is declared public and is thus usable anywhere. It takes an array of arguments as its parameter. Only mandatory argument is `partial` that contains the name, filename or path to the wanted partial.
+dirtystache render function is declared public and is thus usable anywhere. It takes an array of arguments as its parameter. Only mandatory argument is `partial` that contains the name, filename or path to the wanted partial.
 
-With only the partial defined, DustPress passes its global data object to the template. That can be changed by giving it another parameter `data` that would then be passed to the template.
+With only the partial defined, dirtystache passes its global data object to the template. That can be changed by giving it another parameter `data` that would then be passed to the template.
 
 There is also a parameter `type` that defines the format the data would be rendered in. By default it is `html`, but `json` is also a possibility. You can write your own render format functions as well. That feature will be documented later, sorry for that.
 
@@ -562,7 +560,7 @@ The last but not the least of the parameters is `echo` that takes a boolean valu
 
 _in some function_
 ```
-$output = dustpress()->render( [
+$output = dirtystache()->render( [
   "partial"   => 'my_custom_template',
   "data"    => [
       'some_number' => 1,
@@ -575,7 +573,7 @@ $output = dustpress()->render( [
 echo $output;
 ```
 
-_my_custom_template.dust_
+_my_custom_template.handlebars_
 ```
 <ul>
     <li>My number: {some_number}</li>
@@ -592,27 +590,27 @@ _the echoed output_
 
 ### json output
 
-DustPress can output its data as JSON instead of the rendered version if the developer enables the functionality. It is done by adding one or both of following filters into your `functions.php`:
+dirtystache can output its data as JSON instead of the rendered version if the developer enables the functionality. It is done by adding one or both of following filters into your `functions.php`:
 
 ```
-add_filter( 'dustpress/settings/json_url', '__return_true' );
+add_filter( 'dirtystache/settings/json_url', '__return_true' );
 
-add_filter( 'dustpress/settings/json_headers', '__return_true' );
+add_filter( 'dirtystache/settings/json_headers', '__return_true' );
 ```
 
 The former enables JSON output when query parameter `?JSON` is added to the url, and the latter when HTTP header `Accept: application/json` is present on the request.
 
 # Additional Classes
 
-## \DustPress\Query
+## \dirtystache\Query
 
-`\DustPress\Query` is a class that contains a few helper functions for common WordPress tasks. The main functionality of this class is customized post querying with the ability to bind basic WordPress metadata to the queried post objects. With a single function call you can get all the meta needed in your Dust template. It also supports customized data fetching for **[Advanced Custom Fields](https://www.advancedcustomfields.com/) (ACF)** field group data in your post objects.
+`\dirtystache\Query` is a class that contains a few helper functions for common WordPress tasks. The main functionality of this class is customized post querying with the ability to bind basic WordPress metadata to the queried post objects. With a single function call you can get all the meta needed in your Handlebars template. It also supports customized data fetching for **[Advanced Custom Fields](https://www.advancedcustomfields.com/) (ACF)** field group data in your post objects.
 
 ### Querying single posts
 
 #### get_post()
 
-With `\DustPress\Query` you can query single WordPress posts with two different functions. The `get_post()` function accepts the following parameters:
+With `\dirtystache\Query` you can query single WordPress posts with two different functions. The `get_post()` function accepts the following parameters:
 * id: The id of the post.
 * args: Arguments in an array.
 
@@ -630,7 +628,7 @@ $args = [
   ],
   'single' => true
 ];
-\DustPress\Query::get_post( get_the_ID(), $args );
+\dirtystache\Query::get_post( get_the_ID(), $args );
 ```
 
 #### get_acf_post()
@@ -644,7 +642,7 @@ $args = [
   'meta_keys' => null,
   'recursive' => true
 ];
-\DustPress\Query::get_acf_post( get_the_ID(), $args );
+\dirtystache\Query::get_acf_post( get_the_ID(), $args );
 ```
 
 ### Querying multiple posts
@@ -662,7 +660,7 @@ If no matching posts are found, `false` is returned. The return type of this fun
 ```
 public function Query() {
 	// Args might be set if the function is in a submodel or
-	// they can come from a DustPress.js AJAX request.
+	// they can come from a dirtystache.js AJAX request.
     $args = $this->get_args();
 
     $per_page   = (int) get_option( 'posts_per_page' );
@@ -680,8 +678,8 @@ public function Query() {
     ];
 
     // This returns a WP_Query like object.
-    // Queried posts are accessible in dust by typing 'Query.posts'.
-    return \DustPress\Query::get_posts( $args );
+    // Queried posts are accessible in handlebars by typing 'Query.posts'.
+    return \dirtystache\Query::get_posts( $args );
 }
 ```
 
@@ -689,13 +687,14 @@ public function Query() {
 
 This function extends the get_posts function with the ability to load ACF field group data with the post objects. Arguments [described](#get_posts) for the `get_posts` function are also accepted here with the addition of the key `whole_fields` which functions similarly as [described](#get_acf_post) in the `get_acf_post` function. This function does not have a recursive functionality. ACF fields with relational post object data need to be loaded separately.
 
+<!--
 # Plugins
 
 ## Debugger
 
-DustPress also features a debugger that displays the data loaded by your current model in a pretty JSON viewer.
+dirtystache also features a debugger that displays the data loaded by your current model in a pretty JSON viewer.
 
-Get the debugger from [Geniem GitHub](https://github.com/devgeniem/dustpress-debugger) or install it with Composer:
+Get the debugger from [Geniem GitHub](https://github.com/devgeniem/dirtystache-debugger) or install it with Composer:
 ```
 composer require devgeniem/dustpress-debugger
 ```
@@ -717,3 +716,4 @@ Get the Comments helper from [Geniem Github](https://github.com/devgeniem/dustpr
 ```
 composer require devgeniem/dustpress-comments
 ```
+-->
