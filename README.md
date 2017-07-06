@@ -1,4 +1,7 @@
 # dirtystache
+
+A fork of DustPress that uses Handlebars instead of Dust.
+
 # Original DustPress
 - Contributors: [devgeniem](https://github.com/devgeniem) / [Nomafin](https://github.com/Nomafin), [villesiltala](https://github.com/villesiltala)
 - URL: http://www.dustpress.com
