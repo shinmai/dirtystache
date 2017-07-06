@@ -1,20 +1,16 @@
-![geniem-github-banner](https://cloud.githubusercontent.com/assets/5691777/14319886/9ae46166-fc1b-11e5-9630-d60aa3dc4f9e.png)
-
-# DustPress
+# dirtystache
+# Original DustPress
 - Contributors: [devgeniem](https://github.com/devgeniem) / [Nomafin](https://github.com/Nomafin), [villesiltala](https://github.com/villesiltala)
 - URL: http://www.dustpress.com
-- Tags: dustpress, wordpress, dustjs, dust.js
-- Requires at least: 4.2.0
-- Tested up to: 4.7.2
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ## Description
 
-A WordPress theme framework for writing template files with Dust.js templating engine and separate data models.
+A WordPress theme framework for writing template files with Handlebars.js templating engine and separate data models.
 
 ## Installation
-
+<!--
 We recommend that you install DustPress with Composer, but it is also possible to do it manually.
 
 ### Composer
@@ -28,30 +24,30 @@ OR add it into your `composer.json`:
 
 ```json
 {
-  "require": {
-    "devgeniem/dustpress": "*"
-  }
-}
 ```
 
 DustPress supports Composer's autoload feature. If you have it enabled, you don't have to do anything else to use DustPress. If not, you need to require `dustpress.php` in your `functions.php`.
 
 ### Manually
-
-- Clone this repository somewhere in your project and require the `dustpress.php` file in your `functions.php`.
-
+-->
+- Clone this repository somewhere in your project and require the `dirtystache.php` file in your `functions.php`.
+<!--
 ## External resources
 
+  "require": {
+    "devgeniem/dustpress": "*"
+  }
+}
 There are several other repositories that contain DustPress material as well:
 
 - [DustPress Starter Theme](https://github.com/devgeniem/dustpress-starter-theme) - a basic starter theme to use as a boilerplate
 - [DustPress Debugger](https://github.com/devgeniem/dustpress-debugger) - a handy plugin to see the data you have sent to the view
 - [DustPress.js](https://github.com/devgeniem/dustpress-js) - a plugin that provides a JavaScript library to unleash the magical powers of DustPress on the front-end as well
 - [DustPress Comments Helper](https://github.com/devgeniem/dustpress-comments) - a DustPress helper to easily implement commenting on your theme
-
+-->
 ## Usage
 
-You need to call `dustpress();` in your `functions.php` to enable DustPress. It must naturally be done after requiring the library itself if you haven't used Composer's autoload feature.
+You need to call `dirtystache();` in your `functions.php` to enable dirtystache. It must naturally be done after requiring the library itself <!-- if you haven't used Composer's autoload feature -->.
 
 Within your theme there must be two directories called `models` and `partials` to use DustPress. Their purpose will be explained later in this file.
 
